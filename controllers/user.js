@@ -51,3 +51,41 @@ exports.logout = (req, res) => {
     res.clearCookie('t')
     res.json({ message: "Logout success" })
 }
+
+exports.requiredSignIn = expressJwt({
+    secret: process.env.JWT_SECRET,
+    userProperty: 'auth'
+})
+
+//for user profile
+exports.userById = (req, res, next, id) => {
+    User.findById(id).exec( (err, user) => {
+        if(err || !user){
+            res.status(400).json({
+                error: 'No user found'
+            })
+        }
+        req.profile = user
+        next()
+    })
+}
+
+//authenticated user or not
+exports.isAuth = (req, res, next) => {
+    let user = req.profile && req.auth && req.profile._id == req.auth._id
+    if(!user){
+        return res.status(400).json({
+            error: "Access Denied"
+        })
+    }
+    next()
+}
+
+exports.isAdmin = (req, res, next) => {
+    if(req.profile.role === 0){
+        return res.status(403).json({
+            error: "Access Denied"
+        })
+    }
+    next()
+}
