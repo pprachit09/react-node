@@ -1,0 +1,35 @@
+{
+  "name": "react-node",
+  "version": "1.0.0",
+  "description": "MERN application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pprachit09/react-node.git"
+  },
+  "keywords": [
+    "Node",
+    "React",
+    "Mongo",
+    "Express"
+  ],
+  "author": "Prachit Patil",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pprachit09/react-node/issues"
+  },
+  "homepage": "https://github.com/pprachit09/react-node#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^5.3.1",
+    "mongoose": "^5.6.2",
+    "morgan": "^1.9.1",
+    "uuid": "^3.3.2"
+  }
+}
