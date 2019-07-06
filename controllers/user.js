@@ -89,3 +89,28 @@ exports.isAdmin = (req, res, next) => {
     }
     next()
 }
+
+//to show user the profile information
+exports.read = (req, res) => {
+    req.profile.hashPassword = undefined
+    req.profile.salt = undefined
+
+    return res.json(req.profile)
+}
+
+//update profile information
+exports.update = (req, res) => {
+    User.findOneAndUpdate({_id: req.profile._id}, {$set: req.body}, {new: true},
+        (err, user) => {
+            if(err){
+                return res.status(400).json({
+                    error: "Access denied"
+                })
+            }
+            user.hashPassword = undefined
+            user.salt = undefined
+        
+            return res.json(user)
+        }    
+    )
+}

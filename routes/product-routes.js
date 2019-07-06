@@ -13,7 +13,12 @@ const {
     productById,
     read,
     remove,
-    update
+    update,
+    list,
+    listRelated,
+    listCategory,
+    listBySearch,
+    photo
 } = require('../controllers/product')
 
 router.post('/product/create/:userId', 
@@ -41,6 +46,19 @@ router.put('/product/:productId/:userId',
     isAuth,
     update
 )
+
+//list products as per query parameters
+router.get('/products', list)
+
+//realted products
+router.get('/products/related/:productId', listRelated)
+//categories of product
+router.get('/products/categories', listCategory)
+//search product
+router.post("/products/by/search", listBySearch);
+//send photo of product
+router.get('/product/photo/:productId', photo)
+
 
 router.param('userId', userById)
 router.param('productId', productById)
