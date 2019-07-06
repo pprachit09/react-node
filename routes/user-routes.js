@@ -11,7 +11,9 @@ const { signup,
         requiredSignIn, 
         userById,
         isAuth,
-        isAdmin 
+        isAdmin,
+        read,
+        update 
     } = require('../controllers/user')
 
 router.post('/signup', userSignupValidator, signup)
@@ -23,6 +25,12 @@ router.get('/secret/:userId', requiredSignIn, isAuth, isAdmin, (req, res) => {
         user: req.profile
     })
 })
+
+//read user profile
+router.get('/user/:userId', requiredSignIn, isAuth, read)
+
+//update user profile
+router.put('/user/:userId', requiredSignIn, isAuth, update)
 
 router.param('userId', userById)
 

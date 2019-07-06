@@ -4,13 +4,15 @@ const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const expressValidator = require('express-validator')
+const cors = require('cors')
 require('dotenv').config()
 
 //mongodb connection
 const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
 }).then( () => {
     console.log('Connection has been made, now make fireworks...')
 })
@@ -21,6 +23,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser())
 app.use(expressValidator())
+app.use(cors())
 
 //define routes
 app.use('/api', require('./routes/user-routes'))
