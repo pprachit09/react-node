@@ -19,7 +19,6 @@ exports.create = (req, res) => {
 
         //validation for fields
         const { name, description, price, category, shipping, quantity } = fields
-
         if(!name || !description || !price || !category || !shipping || !quantity){
             return res.status(400).json({
                 error: 'All fields are required'
@@ -50,13 +49,15 @@ exports.create = (req, res) => {
 
 //to get the product details
 exports.productById = (req, res, next, id) => {
-    Product.findById(id).exec( (err, product) => {
-        if(err || !product){
-            return res.status(404).json({
-                error: "Product not found"
-            })
-        }
-        req.product = product
+    Product.findById(id)
+        .populate("category")
+        .exec( (err, product) => {
+            if(err || !product){
+                return res.status(404).json({
+                    error: "Product not found"
+                })
+            }
+            req.product = product
         next()
     })
 }
@@ -230,4 +231,26 @@ exports.photo = (req, res, next) => {
         return res.send(req.product.photo.data)
     }
     next()
+}
+
+//to send the products based on category and keywords from query parameter
+exports.listSearch = (req, res) => {
+    const query = {}
+
+    if(req.query.search){
+        query.name = {$regex: req.query.search, $options: 'i'}
+        //assign category to query.category
+        if(req.query.category && req.query.category != 'All'){
+            query.category = req.query.category
+        }
+        //find product in database
+        Product.find(query, (err, products) => {
+            if(err){
+                return res.status(400).json({
+                    error: errorHandler(err)
+                })
+            }
+            res.json(products)
+        }).select('-photo')
+    }
 }

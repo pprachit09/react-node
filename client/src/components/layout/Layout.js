@@ -6,15 +6,16 @@ const Layout = ({
     children
 }) => {
     return (
-        <div >
-            <div className='container grey lighten-2'>
-                <h2>{title}</h2> 
-                <p>{description}</p>
+        <div className="row">
+            <div className='col s12 grey lighten-1'>    
+                <div className='container'>
+                    <h2>{title}</h2> 
+                    <p>{description}</p>
+                </div>
+                <div className='container'>
+                    <p>{children}</p>
+                </div>
             </div>
-            <div className='container'>
-                <p>{children}</p>
-            </div>
-
         </div>
     )
 }
