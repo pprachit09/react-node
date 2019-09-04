@@ -1,6 +1,7 @@
-import React, {Fragment} from "react";
+import React, { Fragment } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../../api/auth";
+import { totalItem } from "../cart/cartHelper";
 
 const Menu = () => {
   return (
@@ -21,22 +22,62 @@ const Menu = () => {
               </li>
             </Fragment>
           )}
-          <li>
-            {isAuthenticated() && (
+          {isAuthenticated() && isAuthenticated().user.role === 0 && (
             <Fragment>
-              <span
-                style={{ cursor: "pointer" }}
-                onClick={() =>
-                  signout(() => {
-                    window.history.go("/");
-                  })
-                }
-              >
-                LogOut
-              </span>
-              </Fragment>
-            )}
-          </li>
+              <li>
+                <Link to="/user/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <Link to="/shop">Shop</Link>
+              </li>
+              <li>
+                <Link to="/cart">
+                  Cart<span className="new badge red">{totalItem()}</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    signout(() => {
+                      window.history.go("/");
+                    })
+                  }
+                >
+                  LogOut
+                </Link>
+              </li>
+            </Fragment>
+          )}
+          {isAuthenticated() && isAuthenticated().user.role === 1 && (
+            <Fragment>
+              <li>
+                <Link to="/admin/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <Link to="/shop">Shop</Link>
+              </li>
+              <li>
+                <Link to="/cart">
+                  Cart<span className="new badge red">{totalItem()}</span>
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/"
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    signout(() => {
+                      window.history.go("/");
+                    })
+                  }
+                >
+                  LogOut
+                </Link>
+              </li>
+            </Fragment>
+          )}
         </ul>
       </div>
     </nav>

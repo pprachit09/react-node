@@ -1,9 +1,11 @@
 import React, {useState} from 'react'
 import {Redirect} from 'react-router-dom'
 import Layout from '../layout/Layout'
-import {signin, authenticate} from '../../api/auth'
+import {signin, authenticate, isAuthenticated} from '../../api/auth'
 
 const Signin = () => {
+
+    const {user} = isAuthenticated()
 
     const [values, setValues] = useState({
         email: 'wayne@wayne.com',
@@ -44,6 +46,14 @@ const Signin = () => {
     //redirect a user
     const redirectUser = () => {
         if(redirectToReferrer){
+            if(user && user.role === 1){
+                return <Redirect to='/admin/dashboard' />
+            }
+            else{
+                return <Redirect to='/user/dashboard' />
+            }
+        }
+        if(isAuthenticated()){
             return <Redirect to='/' />
         }
     }

@@ -18,6 +18,7 @@ const {
     listRelated,
     listCategory,
     listBySearch,
+    listSearch,
     photo
 } = require('../controllers/product')
 
@@ -58,6 +59,8 @@ router.get('/products/categories', listCategory)
 router.post("/products/by/search", listBySearch);
 //send photo of product
 router.get('/product/photo/:productId', photo)
+//search product based on category and keyword
+router.get('/products/search', listSearch)
 
 
 router.param('userId', userById)
