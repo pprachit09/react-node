@@ -2,10 +2,17 @@ import React, { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import moment from "moment";
 import ShowImage from "./ShowImage";
-import { addItem } from "../cart/cartHelper";
+import { addItem, updateItem, removeItem } from "../cart/cartHelper";
 
-const Card = ({ product, showViewButton = true }) => {
+const Card = ({
+  product,
+  showViewButton = true,
+  showAddCartButton = true,
+  updateCart = false,
+  showRemoveButton = false
+}) => {
   const [redirect, setRedirect] = useState(false);
+  const [count, setCount] = useState(product.count);
 
   const handleViewButton = () => {
     if (showViewButton) {
@@ -24,9 +31,50 @@ const Card = ({ product, showViewButton = true }) => {
       <span className="new badge red" data-badge-caption="Out of Stock"></span>
     );
 
-  const handleAddtoCart = () => (
-    <button onClick={addTocart} className="btn-small lime accent-3">Add to cart</button>
-  );
+  const handleAddtoCart = () => {
+    if (showAddCartButton) {
+      return (
+        <button onClick={addTocart} className="btn-small lime accent-3">
+          Add to cart
+        </button>
+      );
+    }
+  };
+
+  const handleRemoveFromCart = () => {
+    if (showRemoveButton) {
+      return (
+        <button
+          onClick={() => removeItem(product._id)}
+          className="btn-small red lighten-1"
+        >
+          Remove
+        </button>
+      );
+    }
+  };
+
+  const showUpdateCartOptions = () => {
+    if (updateCart) {
+      return (
+        <div className="input-field">
+          <input
+            type="number"
+            onChange={handleChange(product._id)}
+            value={count}
+          />
+          <label>Adjust Quantity</label>
+        </div>
+      );
+    }
+  };
+
+  const handleChange = productId => e => {
+    setCount(e.target.value < 1 ? 1 : e.target.value);
+    if (e.target.value > 0) {
+      updateItem(productId, e.target.value);
+    }
+  };
 
   const addTocart = () => {
     addItem(product, () => {
@@ -63,6 +111,8 @@ const Card = ({ product, showViewButton = true }) => {
           {handleViewButton()}
           {showStock(product.quantity)}
           {handleAddtoCart()}
+          {handleRemoveFromCart()}
+          {showUpdateCartOptions()}
         </div>
       </div>
     </div>

@@ -29,6 +29,7 @@ app.use(cors())
 app.use('/api', require('./routes/user-routes'))
 app.use('/api', require('./routes/category-routes'))
 app.use('/api', require('./routes/product-routes'))
+app.use('/api', require('./routes/braintree-routes'))
 
 //routes
 app.get('/', (req, res) => {
