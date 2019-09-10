@@ -13,7 +13,8 @@ const { signup,
         isAuth,
         isAdmin,
         read,
-        update 
+        update,
+        purchaseHistory
     } = require('../controllers/user')
 
 router.post('/signup', userSignupValidator, signup)
@@ -31,6 +32,9 @@ router.get('/user/:userId', requiredSignIn, isAuth, read)
 
 //update user profile
 router.put('/user/:userId', requiredSignIn, isAuth, update)
+
+//get all orders
+router.get('/orders/by/user/:userId', requiredSignIn, isAuth, purchaseHistory)
 
 router.param('userId', userById)
 
