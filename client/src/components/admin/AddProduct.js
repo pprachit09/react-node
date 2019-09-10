@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import {Link} from 'react-router-dom'
 import M from "materialize-css";
 import Layout from "../layout/Layout";
 import { isAuthenticated } from "../../api/auth";
@@ -152,6 +151,8 @@ const AddProduct = () => {
           quantity: "",
           loading: false,
           createdProduct: data.name,
+          redirectToProfile: true,
+          error: false,
           formData: ""
         });
       }

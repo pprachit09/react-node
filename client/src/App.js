@@ -13,6 +13,10 @@ import AddProduct from "./components/admin/AddProduct"
 import ShowShop from "./components/shop/ShowShop"
 import Product from "./components/product/Product"
 import CartPurchase from "./components/cart/CartPurchase";
+import Orders from "./components/admin/Orders";
+import Profile from "./components/user/Profile";
+import ManageProduct from "./components/admin/ManageProduct";
+import UpdateProduct from "./components/admin/UpdateProduct";
 
 const App = () => {
   return (
@@ -24,9 +28,13 @@ const App = () => {
         <Route path="/signin" exact component={Signin} />
         <Route path="/signup" exact component={Signup} />
         <PrivateRoute path="/user/dashboard" exact component={UserDashboard} />
+        <PrivateRoute path="/profile/:userId" exact component={Profile} />
         <AdminRoute path="/admin/dashboard" exact component={AdmindDashboard} />
         <AdminRoute path="/create/category" exact component={AddCategory} />
         <AdminRoute path="/create/product" exact component={AddProduct} />
+        <AdminRoute path="/admin/orders" exact component={Orders} />
+        <AdminRoute path="/admin/products" exact component={ManageProduct} />
+        <AdminRoute path="/admin/product/update/:productId" exact component={UpdateProduct} />
         <Route path="/product/:productId" exact component={Product} />
         <Route path="/cart" exact component={CartPurchase} />
       </Switch>

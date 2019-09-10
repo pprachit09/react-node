@@ -12,7 +12,8 @@ const mongoose = require('mongoose')
 mongoose.connect(process.env.DATABASE, {
     useNewUrlParser: true,
     useCreateIndex: true,
-    useFindAndModify: false
+    useFindAndModify: false,
+    useUnifiedTopology: true
 }).then( () => {
     console.log('Connection has been made, now make fireworks...')
 })
@@ -30,6 +31,7 @@ app.use('/api', require('./routes/user-routes'))
 app.use('/api', require('./routes/category-routes'))
 app.use('/api', require('./routes/product-routes'))
 app.use('/api', require('./routes/braintree-routes'))
+app.use('/api', require('./routes/order-routes'))
 
 //routes
 app.get('/', (req, res) => {
