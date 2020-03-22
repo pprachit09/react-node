@@ -10,7 +10,7 @@ const Orders = () => {
 	const [status, setStatus] = useState([]);
 	const { user, token } = isAuthenticated();
 
-	const loadOrders = () => {
+	const loadOrders = useCallback(() => {
 		listOrders(user._id, token).then(data => {
 			if (data.error) {
 				console.log(data.error);
@@ -18,7 +18,7 @@ const Orders = () => {
 				setOrders(data);
 			}
 		});
-	};
+	});
 
 	const loadStatusValues = () => {
 		getStatusValues(user._id, token).then(data => {
@@ -30,7 +30,7 @@ const Orders = () => {
 		M.AutoInit();
 		loadOrders();
 		loadStatusValues();
-	}, []);
+	}, [loadOrders, loadStatusValues]);
 
 	const showOrdersLength = orders => {
 		return orders.length < 1 ? <h4>No Orders</h4> : <h4>Total Orders: {orders.length}</h4>;
