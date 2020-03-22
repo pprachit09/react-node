@@ -29,7 +29,7 @@ const CheckOut = ({ products }) => {
 				setData({ ...data, clientToken: res.clientToken });
 			}
 		});
-	}, []);
+	}, [data, token, userId]);
 
 	const getTotal = () => {
 		return products.reduce((currentValue, nextValue) => {

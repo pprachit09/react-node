@@ -28,7 +28,7 @@ const Profile = ({ match }) => {
 
 	useEffect(() => {
 		init(match.params.userId);
-	}, []);
+	}, [init, match.params.userId]);
 
 	const profileUpdate = (name, email, password) => (
 		<form>
